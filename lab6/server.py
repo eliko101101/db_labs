@@ -16,7 +16,7 @@ client = MongoClient("mongodb://localhost:27017/")
 @app.route("/", methods=['post', 'get'])
 def mongo_display():
     data = {}
-    for collection in ("orders", "films", "directors", "users"):
+    for collection in ("balleries", "teachers", "subject"):
         d = client["db"][collection].find({})
         data[collection] = list(d)
 
@@ -43,11 +43,11 @@ def postgre_display():
 @app.route("/c", methods=['post', 'get'])
 def convert():
     data = {}
-    for collection in ("orders", "films", "directors", "users"):
+    for collection in ("balleries", "teachers", "subject"):
         d = client["db"][collection].find({})
         data[collection] = [rm_id(i) for i in list(d)]
 
-    tables = ("orders", "films", "directors", "users")
+    tables = ("balleries", "teachers", "subject")
     for collection in tables:
         table = data[collection]
         for row in table:
@@ -83,7 +83,7 @@ def init():
     #psql.execute_file("./sql_files/load_sample_data.sql")
     print("postgre database initialised")
 
-    for table in ("orders", "films", "directors", "users"):
+    for table in ("balleries", "teachers", "subject"):
         with open(f"./json/{table}.json", "r") as file:
             file_data = json.load(file)
     
